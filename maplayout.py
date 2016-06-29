@@ -160,12 +160,11 @@ class TestMapLayout (testutils.TestCaseHelper):
 
     def test_map_layout_parses_what_to_render (self):
         layout = MapLayout ()
-        layout.parse_json ("""
-          { "draw-map-frame" : false,
-            "draw-ticks"     : false,
-            "draw-map"       : false,
-            "draw-scale"     : false }
-        """)
+        layout.parse_json ({
+            "draw-map-frame" : False,
+            "draw-ticks"     : False,
+            "draw-map"       : False,
+            "draw-scale"     : False })
 
         self.assertEqual (layout.draw_map_frame, False)
         self.assertEqual (layout.draw_ticks, False)
@@ -179,12 +178,10 @@ class TestMapLayout (testutils.TestCaseHelper):
         self.assertFloatEquals (layout.paper_height_mm, inch_to_mm (8.5))
 
     def test_map_layout_parses_numeric_paper_size (self):
-        paper_size_numeric = """
-{
-  "paper-width" : 50.8,
-  "paper-height" : 25.4
-}
-"""
+        paper_size_numeric = {
+          "paper-width" : 50.8,
+          "paper-height" : 25.4
+        }
 
         layout = MapLayout ()
         layout.parse_json (paper_size_numeric)
@@ -193,12 +190,10 @@ class TestMapLayout (testutils.TestCaseHelper):
         self.assertFloatEquals (layout.paper_height_mm, 25.4)
 
     def test_map_layout_parses_inches_paper_size (self):
-        paper_size_numeric = """
-{
-  "paper-width" : "11 in",
-  "paper-height" : "8.5 in"
-}
-"""
+        paper_size_numeric = {
+          "paper-width" : "11 in",
+          "paper-height" : "8.5 in"
+        }
 
         layout = MapLayout ()
         layout.parse_json (paper_size_numeric)
@@ -213,27 +208,21 @@ class TestMapLayout (testutils.TestCaseHelper):
 
     def test_map_layout_parses_zoom (self):
         layout = MapLayout ()
-        layout.parse_json ("""
-          { "zoom" : 15 }
-        """)
+        layout.parse_json ({ "zoom" : 15 })
 
         self.assertEqual (layout.zoom, 15)
 
     def test_map_layout_parses_center_lon_and_lat (self):
         layout = MapLayout ()
-        layout.parse_json ("""
-          { "center-lat" : "19d27m43s",
-            "center-lon" : -96.9040473 }
-        """)
+        layout.parse_json ({ "center-lat" : "19d27m43s",
+                             "center-lon" : -96.9040473 })
 
         self.assertFloatEquals (layout.center_lat, parse_degrees ("19d27m43s"))
         self.assertFloatEquals (layout.center_lon, -96.9040473)
 
     def test_map_layout_parses_map_scale (self):
         layout = MapLayout ()
-        layout.parse_json ("""
-          { "map-scale" : 50000 }
-        """)
+        layout.parse_json ({ "map-scale" : 50000 })
 
         self.assertFloatEquals (layout.map_scale_denom, 50000)
 
@@ -250,10 +239,8 @@ class TestMapLayout (testutils.TestCaseHelper):
 
     def test_map_layout_parses_map_width_and_height (self):
         layout = MapLayout ()
-        layout.parse_json ("""
-          { "map-width" : "100 mm",
-            "map-height" : "200 mm" }
-        """)
+        layout.parse_json ({ "map-width" : "100 mm",
+                             "map-height" : "200 mm" })
 
         self.assertFloatEquals (layout.map_width_mm, 100)
         self.assertFloatEquals (layout.map_height_mm, 200)
@@ -265,10 +252,8 @@ class TestMapLayout (testutils.TestCaseHelper):
 
     def test_map_layout_parses_map_to_top_left_margin (self):
         layout = MapLayout ()
-        layout.parse_json ("""
-          { "map-to-left-margin" : "100 mm",
-            "map-to-top-margin" : "200 mm" }
-        """)
+        layout.parse_json ({ "map-to-left-margin" : "100 mm",
+                             "map-to-top-margin" : "200 mm" })
 
         self.assertFloatEquals (layout.map_to_left_margin_mm, 100)
         self.assertFloatEquals (layout.map_to_top_margin_mm, 200)
@@ -280,10 +265,8 @@ class TestMapLayout (testutils.TestCaseHelper):
 
     def test_map_layout_parses_scale_position (self):
         layout = MapLayout ()
-        layout.parse_json ("""
-          { "scale-xpos" : "100 mm",
-            "scale-ypos" : "200 mm" }
-        """)
+        layout.parse_json ({ "scale-xpos" : "100 mm",
+                             "scale-ypos" : "200 mm" })
 
         self.assertFloatEquals (layout.scale_xpos_mm, 100)
         self.assertFloatEquals (layout.scale_ypos_mm, 200)
@@ -309,23 +292,21 @@ class TestMapLayout (testutils.TestCaseHelper):
 
     def test_map_layout_parses_scale_parameters (self):
         layout = MapLayout ()
-        layout.parse_json ("""
-          { "scale-large-divisions-interval-m" : 1000,
-            "scale-num-large-divisions" : 4,
+        layout.parse_json ({ "scale-large-divisions-interval-m" : 1000,
+                             "scale-num-large-divisions" : 4,
 
-            "scale-small-divisions-interval-m" : 100,
-            "scale-num-small-divisions" : 10,
+                             "scale-small-divisions-interval-m" : 100,
+                             "scale-num-small-divisions" : 10,
 
-            "scale-large-ticks-m" : [ 0, 0,
-                                      1000, 1,
-                                      2000, 2,
-                                      3000, 3,
-                                      4000, 4 ],
-            "scale-small-ticks-m" : [ 0, 0,
-                                      500, 500,
-                                      1000, 1000 ]
-          }
-        """)
+                             "scale-large-ticks-m" : [ 0, 0,
+                                                      1000, 1,
+                                                      2000, 2,
+                                                      3000, 3,
+                                                      4000, 4 ],
+                             "scale-small-ticks-m" : [ 0, 0,
+                                                      500, 500,
+                                                      1000, 1000 ]
+          })
 
         self.assertEqual (layout.scale_large_divisions_interval_m, 1000)
         self.assertEqual (layout.scale_num_large_divisions, 4)
