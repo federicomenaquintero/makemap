@@ -109,8 +109,7 @@ class ChartRenderer:
 class TestChartRenderer (testutils.TestCaseHelper):
     def make_test_map_layout (self):
         layout = maplayout.MapLayout ()
-        layout.parse_json ("""
-            {
+        layout.parse_json ({
                 "paper-width"  : "11 in",
                 "paper-height" : "8.5 in",
 
@@ -124,8 +123,7 @@ class TestChartRenderer (testutils.TestCaseHelper):
                 "map-height" : "7.375 in",
                 "map-to-left-margin" : "0.5 in",
                 "map-to-top-margin" : "0.375 in"
-            }
-        """)
+            })
 
         return layout
 
